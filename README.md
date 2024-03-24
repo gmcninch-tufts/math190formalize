@@ -24,6 +24,12 @@ The Lean files to be used in the class are in the folder
   will be accessible later from your [Gitpod user
   page](https://gitpod.io/workspaces).
 
+  **Note:** you can return to your workspace from your [gitpod landing
+  page](https://gitpod.io/workspaces) (once you have an account). Your
+  workspace will be saved for 2 weeks by default; if you *pin* the
+  workspace, it'll be kept indefinitely. Clicking the [Open in Gitpod]
+  button will create a *new* workspace for you.
+
 ## Using *your computer*
 
   Alternatively, you can also [install
