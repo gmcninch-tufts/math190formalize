@@ -81,7 +81,7 @@ theorem flt : FermatLastTheorem := sorry
 
 -- ## Example of proofs of a simple statement
 
--- here is "tactics proof" of the commutative propert of multiplication
+-- here is "tactics proof" of a property regarding multiplication
 -- of complex numbers
 
 example (z w u : ℂ) : z * w * u = w * z * u := by
@@ -95,6 +95,12 @@ example (z w u : ℂ) : z * w * u = w * z * u := by
 
 -- first of all, the function 'congrArg' can be used to deduce that
 -- if we know 'a = b', and if 'f' is a function, then 'f a = f b'
+
+-- the signature of congrArg is roughly
+--
+-- congrArg : (a₁ a₂ : α) → (f : α → β) → (h : a1 = a2) → f a₁ = f a₂
+--
+-- here α and β are types (and the actual signature needs to mention them).
 
 example (a b u : ℂ) ( h : a = b ) : a * u = b * u :=
    congrArg (λ g => g * u) h
@@ -183,7 +189,7 @@ example : ∀ m n : ℕ, Even' n → Even' (m * n) := by
 
 example : ∀ m n : ℕ, Even' n -> Even' (m*n) := by
   rintro m n ⟨k, hk⟩
-  -- this time, we don't utilize 'have' instead of 'use'
+  -- this time, we utilize 'have' instead of 'use'
   have hmk : m * n = m * k + m * k := by
      rw [hk]
      ring
