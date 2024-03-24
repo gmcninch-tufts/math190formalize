@@ -11,4 +11,4 @@ lean_lib «Math190formalize» where
 lean_exe «math190formalize» where
   root := `Main
 
-require mathlib from git "https://github.com/leanprover-community/mathlib4" @ s!"v{Lean.versionString}"
+require mathlib from git "https://github.com/leanprover-community/mathlib4" @ "v4.7.0-rc2"

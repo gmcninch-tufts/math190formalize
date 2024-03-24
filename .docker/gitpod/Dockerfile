@@ -29,7 +29,7 @@ RUN . ~/.profile && elan toolchain install $(curl https://raw.githubusercontent.
 ENV PATH="/home/gitpod/.local/bin:/home/gitpod/.elan/bin:/opt/nvim/bin:${PATH}"
 
 # fix the infoview when the container is used on gitpod:
-ENV VSCODE_API_VERSION="1.50.0"
+#ENV VSCODE_API_VERSION="1.50.0"
 
 # ssh to github once to bypass the unknown fingerprint warning
 RUN ssh -o StrictHostKeyChecking=no github.com || true
