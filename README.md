@@ -4,7 +4,7 @@ This repository contains Lean code for the class
 [math190-Tufts](https://gmcninch-tufts.github.io/2024-Sp-Math190/).
 
 The Lean files to be used in the class are in the folder
-[Math190](https://github.com/gmcninch-tufts/math190-formalize/tree/main/Math190).
+[Math190](https://github.com/gmcninch-tufts/math190formalize/tree/main/Math190formalize).
 
 ## Using Gitpod
 
