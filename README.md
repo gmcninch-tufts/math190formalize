@@ -42,5 +42,16 @@ The Lean files to be used in the class are in the folder
   ``` 
   
   at the command line.  This will create a copy of the repository on
-  your computer. With a suitable *editor*, you can then interact with
-  the code on your computer.
+  your computer. 
+  
+  Now, assuming you have already installed Lean (see above), open a
+  terminal, change directories to the repository you just cloned, and run the following:
+  
+  ```
+  lake exe cache get
+  ```
+  
+  This will install `mathlib` (and other stuff).
+  
+  Now, with a suitable *editor*, you can then interact with the code
+  on your computer.
