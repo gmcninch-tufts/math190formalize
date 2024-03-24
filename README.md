@@ -11,7 +11,7 @@ The Lean files to be used in the class are in the folder
 - You can run the code on the web - in your browser - using Gitpod. To
   get started, click this link:
 
-  [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/gmcninch-tufts/math190-formalize)
+  [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/gmcninch-tufts/math190formalize)
 
 - You will be prompted to make an account, if you do not yet have one
   -- the free tier offers 50 hours of use per month.) This is the
@@ -32,7 +32,7 @@ The Lean files to be used in the class are in the folder
   typing 
   
   ```
-  git clone git@github.com/gmcninch-tufts/math190-formalize.git
+  git clone git@github.com/gmcninch-tufts/math190formalize.git
   ``` 
   
   at the command line.  This will create a copy of the repository on
