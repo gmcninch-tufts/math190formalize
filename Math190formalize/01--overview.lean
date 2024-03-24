@@ -27,9 +27,12 @@ def f ( x : ℕ ) := 20 * x + 3
 
 def g (x y : ℝ) := x^2 + y^2
 
-#check g
-#check g 1
-
+#check g              -- g has type ℝ → ℝ → ℝ
+#check g 1            -- g 1 has type ℝ → ℝ
+#check g 1 2          -- g 1 2 has type ℝ
+#eval g 1 2
+                      -- note that Lean represents real numbers as limits of Cauchy sequences
+                      -- of rational numbers; in this case, of the sequence { 5, 5, 5, ... }
 
 -- you can do some (relatively) ordinary programming languages stuff
 
