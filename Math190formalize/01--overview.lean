@@ -93,46 +93,47 @@ example (z w u : ℂ) : z * w * u = w * z * u := by
   rw [mul_comm z w]
 
 -- you can recognize tactics proofs by the fact that they begin with
--- 'by'.
+-- `by`.
 
 -- a proof of the same statement via "proof terms" is slightly more
 -- complicated, but I think we learn some useful things seeing it.
 
--- first of all, the function 'congrArg' can be used to deduce that
--- if we know 'a = b', and if 'f' is a function, then 'f a = f b'
+-- first of all, the function `congrArg` can be used to deduce that
+-- if we know `a = b`, and if `f` is a function, then `f a = f b`
 
--- the signature of congrArg is roughly
+-- the signature of congrArg is **roughly**
 --
--- congrArg : (a₁ a₂ : α) → (f : α → β) → (h : a1 = a2) → f a₁ = f a₂
+-- `congrArg : (a₁ a₂ : α) → (f : α → β) → (h : a1 = a2) → f a₁ = f a₂`
 --
--- here α and β are types (and the actual signature needs to mention them).
+-- here `α` and `β` are types (and the actual signature needs to mention them).
 
 example (a b u : ℂ) ( h : a = b ) : a * u = b * u :=
    congrArg (λ g => g * u) h
 
--- so we can use 'congrArg' to deduce that 'z * w * u = w * z * u'
--- from the fact that we know 'z*w = w*z' from the commutative law.
+-- so we can use `congrArg` to deduce that `z * w * u = w * z * u`
+-- from the fact that we know `z*w = w*z` from the commutative law.
 
 example (z w u : ℂ): z * w * u = w * z * u :=
   congrArg (λ g => g * u) (mul_comm z w)
 
+-- **a subtlety**
 -- the "arguments" can be given (as "parameters") as before, or they
 -- can be given as part of the type. In that case, the "argumentation"
 -- has to address "introducing" the variables
 
--- tactics version
+-- arguments in the type; tactics version:
 example :  (z w u : ℂ) → z * w * u = w * z * u :=  by
   rintro z w u
   rw [mul_comm z w]
 
--- the type '(z w u : ℂ) → z * w * u = w * z * u' is equivalent to
---          '∀ z w u : ℂ, ... '
--- i.e. for types 'α' and 'β' you can think of a function type
---   'α → β'
+-- the type `(z w u : ℂ) → z * w * u = w * z * u` is equivalent to
+--          `∀ z w u : ℂ, ... `
+-- i.e. for types `α` and `β` you can think of a function type
+--   `α → β`
 -- as being the same as the statement
---   '∀ a : α, b : β'
+--   `∀ a : α, β` or `∀ a : α, b : β`
 
--- proof term version. This time, I'm giving this term a name
+-- **proof term version**. This time, I'm giving this term a name
 -- rather than just giving it as an "example"
 -- so I can use it just below...
 
@@ -142,41 +143,46 @@ def c : (z w u : ℂ) → z * w * u = w * z * u :=
 #check c
 #check c 2 3
 
--- notice that the *type* of the term 'c' is 'z * w * u= w * z * u'
--- and the *type* of the term 'c 2 3' is '2 * 3 * u = 3 * 2 * u'
-
--- of course, in practice, our term c is just another name for the library term `mul_comm`
+-- notice that the *type* of the term `c` is `z * w * u = w * z * u`
+-- and the *type* of the term `c 2 3` is `2 * 3 * u = 3 * 2 * u`
 
 --------------------------------------------------------------------------------
 
 -- Next, we are going to give a proof term (see below) of the result
--- that says (in English):
+-- that says (in English):`
 
---     if 'm,n' are natural numbers, and if 'n' is even, then 'm * n' is also even.
+--   (*)  if `m,n` are natural numbers, and if `n` is even, then `m * n` is also even.
 
 -- Let's first understand how you prove *anything* is even.
+
+-- Well, we introduce a type which characterizes *even-ness*. (I'm calling the type
+-- `Even'` instead of just plain `Even` to avoid conflicts with existing
+-- names in `mathlib`.)
 
 def Even' ( n : ℕ ) : Prop :=
   ∃ r : ℕ, n = r + r
 
--- to demonstrate the proposition 'Even' 4' we have to provide *evidence* that 4 is even.
+-- to demonstrate the proposition `Even' 4` we have to provide *evidence* that 4 is even.
 
 -- the way to "give evidence" for an existence statement ("∃ r") is to
--- use the "introduction rule" 'Exists.intro'
+-- use the "introduction rule" `Exists.intro`
 
 example : Even' 4 := Exists.intro 2 rfl
 
--- Or: we can use "anonymous consructor" '⟨...⟩' instead of the explict form:
+-- Or: we can use "anonymous consructor" `⟨...⟩` instead of the explict form:
 
 example : Even' 6 := ⟨ 3, rfl ⟩
 
--- the *type* of term we are trying to create is
--- '(m : ℕ) → (n : ℕ) → ( hk : Even n ) → Even ( m * n )'
+-- the *type* of term we must create to prove (*) is the following:
 
--- read this as follows: we are given term 'm' and 'n' (of type ℕ) and a
--- term 'hk' (of type 'Even n', which gives evidence that n is even), and we must produce a term
--- of type 'Even ( m * n )' that gives evidence that m * n is even.
+-- `(m : ℕ) → (n : ℕ) → ( hk : Even n ) → Even ( m * n )`
 
+-- read this as follows: we are given terms `m` and `n` (of type `ℕ`) and a
+-- term `hk` (of type `Even n`, which gives evidence that `n` is even), and we must produce a term
+-- of type `Even ( m * n )` that gives evidence that `m * n` is even.
+
+-- as your cursor moves through the arguments in the following proof, watch the `Lean infoview`
+-- in `VSCode` -- you'll see the current state of the "goals" for the proof, until all are resolved.
 
 example : ∀ m n : ℕ, Even' n → Even' (m * n) := by
   -- Say m and n are natural numbers, and assume n=2*k.
@@ -186,11 +192,25 @@ example : ∀ m n : ℕ, Even' n → Even' (m * n) := by
   -- Substitute for n,
   rw [hk]
   -- and now it's obvious.
-  ring
+  ring   -- here, `ring` is a tactic that can prove equalities in commutative (semi-)rings.
   -- or use rw [mul_add]
 
--- alternatively
+-- the above proof used the `use` tactic.
+-- Note that before deploying the `use` tactic above, the `goal` was an existence statement:
+-- (namely we needed to construct a term of type `Even' n*m`).
+-- After `use`, the `goal` is `m * n = m * k + m * k`. In other words, we are left to prove
+-- that `m*k` really "works" to verify the existence proof.
 
+-- ####
+
+-- alternatively, we can avoid `use` and instead construct available hypotheses
+-- using the `have` tactic:
+-- In the proof below, try positioning the cursor on the line *following* the
+-- conclusion of the `have` tactic.
+
+-- At this point, the `Lean infoview` shows that the goal is still to construct
+-- a term of type `Even' n*m`. But now we have an additional hypothesis `hmk`
+-- which we can use to close the goal.
 
 example : ∀ m n : ℕ, Even' n -> Even' (m*n) := by
   rintro m n ⟨k, hk⟩
