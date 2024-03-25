@@ -220,5 +220,8 @@ example : ∀ m n : ℕ, Even' n -> Even' (m*n) := by
      rw [hk]
      ring
   -- and now we are done
-  exact ⟨ _ , hmk ⟩
-  -- or more verbosely:  exact Exists.intro _ hmk
+  exact ⟨ _ , hmk ⟩  -- or `exact ⟨ m*k , hmk ⟩`
+  -- or somewhat more verbosely:  exact `Exists.intro _ hmk` or `Exists.intro m*k hmk`.
+/-
+
+-/
