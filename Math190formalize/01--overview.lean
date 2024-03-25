@@ -215,7 +215,7 @@ example : ∀ m n : ℕ, Even' n → Even' (m * n) := by
 
 example : ∀ m n : ℕ, Even' n -> Even' (m*n) := by
   rintro m n ⟨k, hk⟩
-  -- this time, we utilize 'have' instead of 'use'
+  -- this time, we utilize `have` instead of `use`
   have hmk : m * n = m * k + m * k := by
      rw [hk]
      ring
