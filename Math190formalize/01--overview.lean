@@ -11,13 +11,16 @@ import Mathlib.Data.Nat.Basic
 -- evaluation of expressions, and checking types
 
 #check 8 + 9
+
+#eval 8 + 9
+
 #eval 8 - 11            -- this "difference" is interpreted as a *natural number*
 #eval  (8 - 11 : ℤ)    -- but this is intepreted as an *integer*
 
- 
+
 def f ( x : ℕ ) := 20 * x + 3
 
-#check f  
+#check f
 
 -- evaluating a function is indicated just by justaposition.
 
@@ -55,6 +58,8 @@ def ls : List String := [ "apples", "orange", "bananas" ]
 
 def associativeLaw := (x y z : ℂ) → x * y * z = x * (y * z)
 
+def associativeLaw' := ∀ x y z : ℂ, x*y*z = x*(y*z)
+
 #check associativeLaw
 
 -- there is already a proof of the associative law in MathLib which we
@@ -74,7 +79,7 @@ def FermatLastTheorem :=
 
 #check FermatLastTheorem
 
--- don't know how to give a term of type FermatLastTheorem ... 
+-- don't know how to give a term of type FermatLastTheorem ...
 theorem flt : FermatLastTheorem := sorry
 
 -- insert snarky comment about the size of the margin??
@@ -109,7 +114,7 @@ example (a b u : ℂ) ( h : a = b ) : a * u = b * u :=
 -- from the fact that we know 'z*w = w*z' from the commutative law.
 
 example (z w u : ℂ): z * w * u = w * z * u :=
-  congrArg (λ g => g * u) (mul_comm z w) 
+  congrArg (λ g => g * u) (mul_comm z w)
 
 -- the "arguments" can be given (as "parameters") as before, or they
 -- can be given as part of the type. In that case, the "argumentation"
@@ -131,14 +136,14 @@ example :  (z w u : ℂ) → z * w * u = w * z * u :=  by
 -- rather than just giving it as an "example"
 -- so I can use it just below...
 
-def c : (z w u : ℂ) → z * w * u = w * z * u := 
+def c : (z w u : ℂ) → z * w * u = w * z * u :=
   λ z w u => congrArg (λ g => g * u) (mul_comm z w)
 
-#check c 
+#check c
 #check c 2 3
 
--- notice that the *type* of the term 'c' is '(z w : ℂ) →  z * w = w * z'
--- and the *type* of the term 'c 2 3' is '2 * 3 = 3 * 2'
+-- notice that the *type* of the term 'c' is 'z * w * u= w * z * u'
+-- and the *type* of the term 'c 2 3' is '2 * 3 * u = 3 * 2 * u'
 
 -- of course, in practice, our term c is just another name for the library term `mul_comm`
 
@@ -154,7 +159,7 @@ def c : (z w u : ℂ) → z * w * u = w * z * u :=
 def Even' ( n : ℕ ) : Prop :=
   ∃ r : ℕ, n = r + r
 
--- to demonstrate the proposition 'Even' 4' we have to provide *evidence* that 4 is even. 
+-- to demonstrate the proposition 'Even' 4' we have to provide *evidence* that 4 is even.
 
 -- the way to "give evidence" for an existence statement ("∃ r") is to
 -- use the "introduction rule" 'Exists.intro'
@@ -196,4 +201,3 @@ example : ∀ m n : ℕ, Even' n -> Even' (m*n) := by
   -- and now we are done
   exact ⟨ _ , hmk ⟩
   -- or more verbosely:  exact Exists.intro _ hmk
-     
