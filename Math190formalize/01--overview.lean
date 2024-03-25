@@ -30,12 +30,12 @@ def f ( x : ℕ ) := 20 * x + 3
 
 def g (x y : ℝ) := x^2 + y^2
 
-#check g              -- g has type ℝ → ℝ → ℝ
-#check g 1            -- g 1 has type ℝ → ℝ
-#check g 1 2          -- g 1 2 has type ℝ
+#check g              -- `g` has type `ℝ → ℝ → ℝ`
+#check g 1            -- `g 1` has type `ℝ → ℝ`
+#check g 1 2          -- `g 1 2` has type `ℝ`
 #eval g 1 2
                       -- note that Lean represents real numbers as limits of Cauchy sequences
-                      -- of rational numbers; in this case, of the sequence { 5, 5, 5, ... }
+                      -- of rational numbers; in this case, of the sequence `{ 5, 5, 5, ... }`
 
 -- you can do some (relatively) ordinary programming languages stuff
 
@@ -51,8 +51,8 @@ def ls : List String := [ "apples", "orange", "bananas" ]
 -- join lists
 #eval (ls ++ ls : List String)
 
--- can't join ll and ls, since they have different types
---#eval ls ++ ll
+-- can't join `ll` and `ls`, since they have different types (try it!!)
+--#eval `ls ++ ll`
 
 -- Propositions and such
 
@@ -105,7 +105,7 @@ example (z w u : ℂ) : z * w * u = w * z * u := by
 --
 -- `congrArg : (a₁ a₂ : α) → (f : α → β) → (h : a1 = a2) → f a₁ = f a₂`
 --
--- here `α` and `β` are types (and the actual signature needs to mention them).
+-- here `α` and `β` are types (and the **actual** signature needs to mention them).
 
 example (a b u : ℂ) ( h : a = b ) : a * u = b * u :=
    congrArg (λ g => g * u) h
@@ -121,7 +121,8 @@ example (z w u : ℂ): z * w * u = w * z * u :=
 -- can be given as part of the type. In that case, the "argumentation"
 -- has to address "introducing" the variables
 
--- arguments in the type; tactics version:
+-- equivalent statement, but with arguments in the type
+-- proof via tactics:
 example :  (z w u : ℂ) → z * w * u = w * z * u :=  by
   rintro z w u
   rw [mul_comm z w]
@@ -185,11 +186,11 @@ example : Even' 6 := ⟨ 3, rfl ⟩
 -- in `VSCode` -- you'll see the current state of the "goals" for the proof, until all are resolved.
 
 example : ∀ m n : ℕ, Even' n → Even' (m * n) := by
-  -- Say m and n are natural numbers, and assume n=2*k.
+  -- Say `m` and `n` are natural numbers, and assume `n=2*k`.
   rintro m n ⟨k, hk⟩
-  -- We need to prove m*n is twice a natural number. Let's show it's twice m*k.
+  -- We need to prove `m*n` is twice a natural number. Let's show it's twice `m*k`.
   use m * k
-  -- Substitute for n,
+  -- Substitute for `n`,
   rw [hk]
   -- and now it's obvious.
   ring   -- here, `ring` is a tactic that can prove equalities in commutative (semi-)rings.
@@ -199,7 +200,7 @@ example : ∀ m n : ℕ, Even' n → Even' (m * n) := by
 -- Note that before deploying the `use` tactic above, the `goal` was an existence statement:
 -- (namely we needed to construct a term of type `Even' n*m`).
 -- After `use`, the `goal` is `m * n = m * k + m * k`. In other words, we are left to prove
--- that `m*k` really "works" to verify the existence proof.
+-- that `m*k`, the term we `use`d, really "works" to verify the existence proof.
 
 -- ####
 
