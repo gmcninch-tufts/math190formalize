@@ -1,7 +1,17 @@
 --------------------------------------------------------------------------------
--- Math 190 - Tufts University
--- George McNinch
--- 2024 Spring
+/-
+Copyright (c) 2024 George McNinch. All rights reserved.
+Released under the MIT license as described in the file LICENSE.
+Author : George McNinch
+-/
+
+/-
+course: Math 190 - Tufts University
+insructor: George McNinch
+semester: 2024 Spring
+-/
+
+--------------------------------------------------------------------------------
 -- 01 -- Overview on Lean
 --------------------------------------------------------------------------------
 
@@ -14,7 +24,7 @@ import Mathlib.Data.Nat.Basic
 
 #eval 8 + 9
 
-#eval 8 - 11            -- this "difference" is interpreted as a *natural number*
+#eval 8 - 11           -- this "difference" is interpreted as a *natural number*
 #eval  (8 - 11 : ℤ)    -- but this is intepreted as an *integer*
 
 
