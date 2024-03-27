@@ -15,3 +15,8 @@ semester: 2024 Spring
 ----------------------------------------------------------------------------------
 
 import Mathlib.Tactic
+
+variable (a b c: ℕ)
+
+example : a * b * c = (a * b)  * c := by
+ rfl
