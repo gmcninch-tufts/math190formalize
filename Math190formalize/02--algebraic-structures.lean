@@ -78,3 +78,5 @@ example ( h1 : c = d * a + b) (h2 : b = a * d) : c = 2 * a * d := by
 
 
 
+theorem neg_add_cancel_left (a b : R) : -a + (a + b) = b := by
+  rw [← add_assoc, add_left_neg, zero_add]
