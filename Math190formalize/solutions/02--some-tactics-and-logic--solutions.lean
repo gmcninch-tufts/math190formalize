@@ -1,3 +1,19 @@
+/-
+Copyright (c) 2024 George McNinch. All rights reserved.
+Released under the MIT license as described in the file LICENSE.
+Author : George McNinch
+-/
+
+/-
+course: Math 190 - Tufts University
+instructor: George McNinch
+semester: 2024 Spring
+-/
+
+----------------------------------------------------------------------------------
+-- 02 -- Some tactics **solutions**
+----------------------------------------------------------------------------------
+
 import Mathlib.Tactic
 --------------------------------------------------------------------------------
 

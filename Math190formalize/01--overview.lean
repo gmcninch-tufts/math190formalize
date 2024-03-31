@@ -7,7 +7,7 @@ Author : George McNinch
 
 /-
 course: Math 190 - Tufts University
-insructor: George McNinch
+instructor: George McNinch
 semester: 2024 Spring
 -/
 
