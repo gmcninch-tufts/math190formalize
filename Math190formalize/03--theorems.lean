@@ -78,3 +78,5 @@ example (a : R) : a * 0 = 0 :=  by
   exact?
 
 
+theorem neg_add_cancel_left (a b : R) : -a + (a + b) = b := by
+  rw [← add_assoc, add_left_neg, zero_add]
