@@ -11,18 +11,21 @@ semester: 2024 Spring
 -/
 
 ----------------------------------------------------------------------------------
--- 02 -- Algebraic structures (first pass)
+-- 03 -- Theorems
 ----------------------------------------------------------------------------------
 
 import Mathlib.Tactic
+
+
+
+--------------------------------------------------------------------------------
+
 
 /- Lean has a way of representing a `ring` as a type.
 
    It knows the ring axioms.
 
 -/
-
---------------------------------------------------------------------------------
 namespace myring
 
 variable (R : Type*) [Ring R]
@@ -54,6 +57,7 @@ end myring
   `add : R → R → R`
 
   and we have `a + b == add a b`
+
 -/
 
 variable (R : Type*) [CommRing R]
@@ -68,13 +72,9 @@ example : d^2 * a * b * c = b * (d^2 * a * c) := by
 example : (a + b) * (c + d)  = a*c + a*d + b*c + b * d :=  by
   ring
 
+-- we can *search* for proofs by using `exact?`
 
--- by itself, `ring` doesn't quite solve the following.
--- we need to *rewrite* the goal using the hypotheses.
-
-example ( h1 : c = d * a + b) (h2 : b = a * d) : c = 2 * a * d := by 
-  rw [ h1, h2]
-  ring
-
+example (a : R) : a * 0 = 0 :=  by 
+  exact?
 
 
