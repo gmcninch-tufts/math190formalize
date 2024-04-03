@@ -236,8 +236,108 @@ example : (P ↔ Q) → (R ↔ S) → (P ∧ R ↔ Q ∧ S) := by
   done
 
 -- problem 2.7
-example : ¬(P ↔ ¬P) := by
+example : ¬(P ↔ ¬P) := by       
   sorry
   done
 
 --------------------------------------------------------------------------------
+-- manipulation of `P ∨ Q`
+
+-- The canonical way to prove a disjunction `P ∨ Q` is to prove `P` or to
+-- prove `Q`. The `left` tactic chooses `A`, and the `right` tactic chooses `B`
+
+-- For example
+
+example : Q → P ∨ Q := by
+  intro hq
+  right 
+  exact hq
+  done
+
+-- the definition of the disjunction looks something like the following:
+
+inductive Or' (α : Prop) (β : Prop) where
+  | inl' : α → Or' α β
+  | inr' : β → Or' α β
+
+-- so e.g. we can make a new type
+
+example : P → Or' P Q := λ hp => Or'.inl' hp
+
+-- to use the Lean's "real" disjuction we can use
+-- i.e. `inl` and `inr` are the `constructors` for the `Or` type
+
+example : Q →  P ∨ Q := λ hq => Or.inr hq
+
+
+-- let's consider a more complicated example
+-- if we have a hypotheses `hpq : P ∨ Q`
+-- we can handle the two possibities: `hpq == inl hp` or `hpq == inr hq`
+-- using a 'cases' statement
+example : P ∨ Q → (P → R) → (Q → R) → R := by
+  intro hpq f g
+  cases hpq     -- this produces two subgoals, labelled by the possibilities
+                -- for hpq: `inl` or `inr`
+  case inl h =>   -- we have `h:P`
+    apply f
+    exact h
+  case inr h =>   -- we have `h:Q`
+    apply g
+    exact h
+  done
+
+-- symmetry of ∨
+
+-- symmetry of `or`
+example : P ∨ Q → Q ∨ P := by
+  intro hqp
+  cases hqp
+  case inl h =>
+    right
+    exact h
+  case inr h =>
+    left
+    exact h
+  done
+
+-- let's prove half of the deMorgan laws 
+
+example : ¬(P ∨ Q) ↔ ¬P ∧ ¬Q := by
+  constructor
+  case mp =>
+    intro h
+    constructor 
+    case left =>
+      intro hp
+      apply h
+      left
+      exact hp
+      done
+    case right =>
+      intro hq
+      apply h
+      right
+      exact hq
+      done
+    done
+  case mpr =>
+    intro ⟨ hnp, hnq ⟩
+    intro pOq
+    cases pOq
+    case inl h =>
+      apply hnp
+      exact h
+    case inr h =>
+      apply hnq
+      exact h
+    done
+  done
+
+
+--------------------------------------------------------------------------------
+-- group 3
+-- try the other half of deMorgan, as an exercise
+
+example : ¬(P ∧ Q) ↔ ¬P ∨ ¬Q := by
+  sorry
+  done

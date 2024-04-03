@@ -117,8 +117,16 @@ example : (P ↔ Q) → (Q ↔ R) → (P ↔ R) := by
   exact ⟨ hpr, hrp ⟩
   done
 
--- problem 2.2
+-- **or** use "rewrite"! 
 
+-- problem 2.1
+example : (P ↔ Q) → (Q ↔ R) → (P ↔ R) := by
+  intro hepq heqr
+  rw [ ← heqr, ← hepq ]
+  done
+
+
+-- problem 2.2
 example : P ∧ Q ↔ Q ∧ P := by
   have and_symm { A B : Prop} (h : A ∧ B) : B ∧ A := by
     exact ⟨ h.2, h.1 ⟩
@@ -131,27 +139,116 @@ example : P ∧ Q ↔ Q ∧ P := by
   exact ⟨ hf, hr ⟩
   done
 
+-- *or* use "rewrite"!!
+-- problem 2.2
+example : P ∧ Q ↔ Q ∧ P := by
+  constructor <;>
+  {
+    intro ⟨l,r⟩
+    exact ⟨r,l⟩
+  }
+  done
+
 -- problem 2.3
 example : (P ∧ Q) ∧ R ↔ P ∧ Q ∧ R := by
-  sorry
+  constructor 
+  case mp =>
+    intro ⟨⟨p,q⟩,r⟩
+    exact ⟨p,⟨q,r⟩⟩
+  case mpr =>
+    intro ⟨p,⟨q,r⟩⟩
+    exact ⟨⟨p,q⟩,r⟩
   done
 
 -- problem 2.4
 example : P ↔ P ∧ True := by
-  sorry
+  constructor
+  case mp =>
+    intro hp
+    constructor 
+    case left =>
+      exact hp
+    case right =>
+      triv
+  case mpr =>
+    intro ⟨hp,_⟩
+    exact hp
   done
+
 
 -- problem 2.5
 example : False ↔ P ∧ False := by
-  sorry
+  constructor
+  case mp => 
+    intro f
+    exfalso
+    exact f 
+  case mpr =>
+    intro ⟨_,f⟩
+    exact f
   done
 
 -- problem 2.6
 example : (P ↔ Q) → (R ↔ S) → (P ∧ R ↔ Q ∧ S) := by
-  sorry
+  intro hpq hrs
+  constructor
+  case mp =>
+    intro h
+    rw [ ← hpq, ← hrs ]
+    exact h
+  case mpr =>
+    intro h
+    rw [ hpq, hrs ]
+    exact h
   done
 
 -- problem 2.7
 example : ¬(P ↔ ¬P) := by
-  sorry
+  intro h
+  rcases h with ⟨ hmp, hmpr ⟩
+  by_cases hp : P    -- I guess this uses "excluded middle" ...
+  case pos =>  -- in this case, `hp : P`
+    apply hmp 
+    exact hp
+    exact hp
+    done
+  case neg =>  -- in this case, `hp : ¬P`
+    apply hp
+    apply hmpr
+    exact hp
   done
+
+
+
+--------------------------------------------------------------------------------
+-- group 3
+-- try the other half of deMorgan, as an exercise
+
+example : ¬(P ∧ Q) ↔ ¬P ∨ ¬Q := by
+  constructor 
+  case mp =>
+    intro h
+    by_cases hp : P          -- either P is true or its not..
+    case pos  =>  -- here `hp:P`
+      right
+      intro hq 
+      apply h
+      exact ⟨ hp, hq ⟩
+    case neg  =>  -- here `hp:¬P`
+      left
+      exact hp
+      done
+    done
+  case mpr =>
+    intro h
+    intro ⟨hp,hq⟩
+    cases h
+    case inl h =>
+      apply h
+      exact hp
+    case inr h =>
+      apply h
+      exact hq
+    done
+  done
+
