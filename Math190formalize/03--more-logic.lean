@@ -276,14 +276,15 @@ example : Q →  P ∨ Q := λ hq => Or.inr hq
 -- using a 'cases' statement
 example : P ∨ Q → (P → R) → (Q → R) → R := by
   intro hpq f g
-  cases hpq     -- this produces two subgoals, labelled by the possibilities
-                -- for hpq: `inl` or `inr`
-  case inl h =>   -- we have `h:P`
+  rcases hpq with hp | hq    -- this produces two subgoals, labelled by the possibilities
+  { -- hp in context here
     apply f
-    exact h
-  case inr h =>   -- we have `h:Q`
+    exact hp
+  }
+  { -- hq in context here
     apply g
-    exact h
+    exact hq
+  }
   done
 
 -- symmetry of ∨
@@ -291,19 +292,31 @@ example : P ∨ Q → (P → R) → (Q → R) → R := by
 -- symmetry of `or`
 example : P ∨ Q → Q ∨ P := by
   intro hqp
-  cases hqp
-  case inl h =>
-    right
-    exact h
-  case inr h =>
-    left
-    exact h
+  rcases hqp with hp | hq
+  { right
+    exact hp
+  }
+  { left
+    exact hq
+  }
   done
 
+example : P ∨ Q → Q ∨ P := by
+  intro hqp
+  rcases hqp with hp | hq
+  { right
+    exact hp
+  }
+  { left
+    exact hq
+  }
+  done
+
+ 
 -- let's prove half of the deMorgan laws 
 
 example : ¬(P ∨ Q) ↔ ¬P ∧ ¬Q := by
-  constructor
+  constructor 
   case mp =>
     intro h
     constructor 
@@ -333,6 +346,42 @@ example : ¬(P ∨ Q) ↔ ¬P ∧ ¬Q := by
     done
   done
 
+
+example : ¬(P ∨ Q) ↔ ¬P ∧ ¬Q := by
+  constructor 
+  {
+    intro h
+    constructor 
+    {
+      intro hp
+      apply h
+      left
+      exact hp
+      done
+    }
+    {
+      intro hq
+      apply h
+      right
+      exact hq
+      done
+    }     
+    done
+  }
+  {
+    intro ⟨ hnp, hnq ⟩
+    intro pOq
+    rcases pOq with hp | hq
+    {
+      apply hnp
+      exact hp
+    }
+    {
+      apply hnq
+      exact hq
+    }
+  }
+  done
 
 --------------------------------------------------------------------------------
 -- group 3
