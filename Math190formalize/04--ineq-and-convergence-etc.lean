@@ -43,14 +43,15 @@ example : x < y → y ≤ z → x < z := by
 
 end
 
--- Now, let's observe that if we formulate a Theorem, we can *use* it later  
--- in other contexts:
+-- let's consider a *theorem* about inequalities
+
 
 theorem my_lemma : ∀ {x y ε : ℝ}, 0 < ε → ε ≤ 1 → |x| < ε → |y| < ε → |x * y| < ε := by
   sorry 
   done
 
 section
+
 variable (a b δ : ℝ)
 variable (h₀ : 0 < δ) (h₁ : δ ≤ 1)
 variable (ha : |a| < δ) (hb : |b| < δ)
@@ -97,7 +98,7 @@ example : { x y ε : ℝ } → 0 < ε → ε ≤ 1 → |x| < ε → |y| < ε →
     _ < 1 * ε := by 
          apply (mul_lt_mul_right h₀).mpr
          linarith
-    _ = ε := one_mul ε 
+    _ = ε := by ring -- one_mul ε 
   done
 
 
@@ -138,25 +139,12 @@ def ConvergesTo (s:ℕ → ℝ) (b:ℝ) :=
 
 -- we are going to discuss proofs of convergence
 
--- we require some new tactics:
-
--- first, `ext` gives  a way to prove that two functions are equal.
-
--- The `ext` tactic enables us to prove an equation between functions by
--- proving that their values are the same at all the values of their
--- argument
-
-example : (λ x y : ℝ => (x-y)^2)  = (λ x y :ℝ => x^2 - 2*x*y + y^2) := by
-  ext x y
-  ring
-
-
--- second tactic is `congr`
+-- we require a new tactic, `congr`
 
 -- it allows us to prove an equation between two expressions by
 -- reconciling the parts that are different:
 
-example (a b : ℝ) (f:ℝ → ℝ) : f a = f (a - b + b) := by
+example (a b : ℝ) (f:ℝ → ℝ) : f (2*a + 1) = f (1 + 3*a - a) := by
   congr
   ring
 
@@ -190,8 +178,8 @@ theorem convergesTo_add'
   intro ε εpos
   dsimp -- this line is not needed but cleans up the goal a bit.
   have ε2pos : 0 < ε / 2 := by linarith
-  rcases cs (ε / 2) ε2pos with ⟨Ns, hs⟩
-  rcases ct (ε / 2) ε2pos with ⟨Nt, ht⟩
+  rcases cs (ε/2) ε2pos with ⟨Ns, hs⟩
+  rcases ct (ε/2) ε2pos with ⟨Nt, ht⟩
   use max Ns Nt
   intro n hn
   have hnt : Nt ≤ n := by
@@ -206,8 +194,7 @@ theorem convergesTo_add'
   have h₂: |t n - b| < ε/2 := ht n hnt
   have hst : |s n + t n - (a + b)| ≤ |s n - a| + |t n - b| := by 
     have hh : |s n + t n - (a + b)| = |(s n - a) + (t n - b)| := by 
-      apply congr
-      rfl
+      congr
       ring
     rw [hh]
     exact abs_add _ _      -- triangle inequality
@@ -217,4 +204,5 @@ theorem convergesTo_add'
     done
   linarith
   done
+
 
