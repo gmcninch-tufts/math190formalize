@@ -206,3 +206,4 @@ theorem convergesTo_add'
   done
 
 
+#check cauchy
