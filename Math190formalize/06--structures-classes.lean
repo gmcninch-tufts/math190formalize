@@ -298,3 +298,22 @@ end
 
 example (a : LatticePoint) : a - a = 0 := by
   exact add_right_neg' a
+
+
+--- finally, we really ought to have first defined the `Add`, `Zero`, `Sub`, `Neg` instances,
+--- and then defined `AddGroup` to `extend` these
+
+-- then we can use additive notation in the "group laws"
+
+class AddGroup₃ (α : Type*) extends Add α, Neg α, Sub α, Zero α where
+--  add : α → α → α
+--  zero : α
+--  neg : α → α
+  add_assoc : ∀ x y z : α, (x+y)+z = x + (y+z)
+  add_zero : ∀ x : α, x + 0 = x
+  zero_add : ∀ x : α, 0 + x = x
+  add_left_neg : ∀ x : α, -x + x = 0
+  add_comm : ∀ x y : α, x + y = y + x
+
+
+
