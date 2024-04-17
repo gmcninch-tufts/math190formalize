@@ -207,7 +207,20 @@ example : s ⊆ f ⁻¹' (f '' s) := by
  rfl
  
 
+-------- other direction
 
+example : f '' (f ⁻¹' T) ⊆ T := by 
+  rintro z ⟨y, hy, eq⟩
+  rw [←eq]
+  exact hy
+
+
+-- `rfl` trick
+-- requires use of `rintro` rather than `intro`
+
+example : f '' (f ⁻¹' T) ⊆ T := by 
+  rintro _ ⟨y, hy, rfl⟩
+  exact hy
 
 
 
