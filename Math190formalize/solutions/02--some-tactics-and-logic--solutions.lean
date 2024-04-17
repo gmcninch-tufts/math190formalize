@@ -243,3 +243,11 @@ example : (¬Q → ¬P) → P → Q := by
                        -- so we find the term `(h xq) p : False`
     apply (h xq) p
   done
+
+example : (¬Q → ¬P) → P → Q := by
+  intro h p   
+  by_cases xq : Q
+  · exact xq           -- in the first case, `xq : Q`
+  · have k := h xq     -- this produces a term of type `¬ P`
+    contradiction      -- trivial contradiction is available, namely `k p`
+  done
