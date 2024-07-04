@@ -173,7 +173,7 @@ example : True := True.intro
 -- to give the trivial proof in tactics mode, use the `triv` tactic:
 
 example : True := by
-  triv
+  trivial
   done
 
 
@@ -183,7 +183,7 @@ example : (True → False) → False := by
   -- we have a proof `h` of `True → False`
   apply h
   -- after applying h, we must prove `True`
-  triv
+  trivial
   done
 
 -- another way to do the same proof:
@@ -281,7 +281,7 @@ example : (True → False) → P := by
 example : ¬True → False := by
   intro h      -- now `h : ¬ True` which is the same as `h : True → False`
   apply h      -- after `apply`ing h, the goal is `⊢ True`
-  triv         -- and we can solve that goal with `triv`, the trivial proof
+  trivial         -- and we can solve that goal with `triv`, the trivial proof
   done
 
 -- the `by_contra` tactic allows us to prove a goal Q by assuming ¬ Q

@@ -144,8 +144,8 @@ def ConvergesTo (s:ℕ → ℝ) (b:ℝ) :=
 -- it allows us to prove an equation between two expressions by
 -- reconciling the parts that are different:
 
-example (a b : ℝ) (f:ℝ → ℝ) : f (2*a + 1) = f (1 + 3*a - a) := by
-  congr
+example (a : ℝ) (f:ℝ → ℝ) : f (2*a) = f (3*a - a) := by
+  congr 
   ring
 
 
@@ -206,4 +206,4 @@ theorem convergesTo_add'
   done
 
 
-#check cauchy
+-- #check cauchy
