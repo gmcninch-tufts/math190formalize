@@ -23,7 +23,7 @@ import Mathlib.Tactic
 example : P → Q → P := by
   intro p _
   exact p
-  done
+
 
 /- If we know `P`, and we also know `P → Q`, we can deduce `Q`.
    This is called "Modus Ponens" by logicians. -/
@@ -67,7 +67,7 @@ example : True → True := by
 -- problem 2.1
 example : True → True := by
   intro _
-  triv
+  trivial
   done
 
 -- **or*
@@ -125,7 +125,7 @@ example : (True → False) → P := by
   intro h
   exfalso
   apply h
-  triv
+  trivial
   done
 
 
@@ -144,7 +144,7 @@ example : False → ¬True := by
 -- problem 3.2
 example : ¬False → True := by
   intro _
-  triv
+  trivial
   done
 
 -- problem 3.3
