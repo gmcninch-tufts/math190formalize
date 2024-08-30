@@ -155,7 +155,6 @@ end LatticePoint
 
 -- Next steps: link addition of LatticePoints to the `+` symbol (!)
 
-
 -- # simplex as a structure
 
 open BigOperators
