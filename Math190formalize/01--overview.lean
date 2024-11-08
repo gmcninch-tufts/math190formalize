@@ -16,7 +16,6 @@ semester: 2024 Spring
 --------------------------------------------------------------------------------
 
 import Mathlib.Tactic
-import Mathlib.Data.Nat.Basic
 
 -- evaluation of expressions, and checking types
 
