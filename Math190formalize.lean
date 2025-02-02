@@ -1,0 +1,11 @@
+import Math190formalize.solutions.«02--some-tactics-and-logic--solutions»
+import Math190formalize.solutions.«03--more-logic--solutions»
+import Math190formalize.solutions.«05--sets-and-subsets--exercise-solutions»
+import Math190formalize.«01--overview»
+import Math190formalize.«02--some-tactics-and-logic»
+import Math190formalize.«03--more-logic»
+import Math190formalize.«04--ineq-and-convergence-etc»
+import Math190formalize.«05--sets-and-subsets--exercises»
+import Math190formalize.«05--sets-and-subsets»
+import Math190formalize.«06--structures-classes»
+import Math190formalize.«07--algebra»
